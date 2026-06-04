@@ -1,11 +1,11 @@
 -- name: \\#ffff1e\\Coords \\#00ff00\\+ \\#00ffff\\DX\\#dcdcdc\\ [WIP]
--- description: Una revolucion reimaginada de los mods de utilidad. Se tomaron ideas de varios mods, mas notablemente el modo de juego \\#3df5ff\\Flood \\#00ff00\\+\\#dcdcdc\\ y algunos mods de \\#9b9b9b\\Agent \\#ec7731\\X\\#dcdcdc\\, de ellos se tomaron ideas y se aprendio de sus mods, para hacer este increible mod.\n\nPuedes consultar los comandos del mod al escribir "/help" en el chat.\n\n \\#1892f5\\Creado por\\#dcdcdc\\: el equipo de devs de \\#ffa700\\Coords +\\#dcdcdc\\.\n\n--------------------------------\n\                   -\\#00ff00\\Version: 1.2.1\\#dcdcdc\\-\n\--------------------------------
+-- description: Una revolucion de los mods de utilidad. Se tomaron ideas de varios mods, mas notablemente el modo de juego \\#3df5ff\\Flood \\#00ff00\\+\\#dcdcdc\\ y de algunos mods de un desarrollador llamado\n\\\#9b9b9b\\Agent \\#ec7731\\X\\#dcdcdc\\, de ellos se tomaron ideas y se aprendio de sus mods, para hacer este increible mod.\n\nPuedes consultar los comandos del mod al escribir "/help" en el chat.\n\n \\#1892f5\\Creado por\\#dcdcdc\\: el equipo de devs de\n\ \\#ffa700\\Coords +\\#dcdcdc\\.\n\n--------------------------------\n\-\\#00ff00\\Version: 1.2.1\\#dcdcdc\\-\n\--------------------------------
 -- category: utility
 -- deluxe: true
 
 require("a-lang")
 require("b-tags")
-require("a-tags-lang-loader")
+require("b-tags-lang-loader")
 require("z-menu")
 
 require("lang-tags/tag-lang-es")
@@ -87,6 +87,15 @@ end
 
 load_config()
 
+local function refresh_chat_command_descriptions()
+    if not update_chat_command_description then return end
+    update_chat_command_description("s", _T("s_cmd_desc"))
+    update_chat_command_description("c", _T("c_cmd_desc"))
+    update_chat_command_description("a", _T("a_cmd_desc"))
+    update_chat_command_description("cpmenu", _T("cpmenu_cmd_desc"))
+end
+
+
 local function on_hud_render_main()
     local m = gMarioStates[0]
     if not m or not m.marioObj then return end
@@ -107,6 +116,7 @@ local function on_hud_render_main()
                 _G.LANG.current = pending_lang_change
                 notify(_T("notify_lang"), true)
                 save_config()
+                refresh_chat_command_descriptions()
             end
         elseif lang_fade_timer > 10 and lang_fade_timer < 20 then
             lang_text_alpha = lerp(lang_text_alpha, 255, 0.4)
@@ -119,10 +129,11 @@ local function on_hud_render_main()
 
     if startup_timer < 30 then startup_timer = startup_timer + 1 end
     local can_show_hud = (startup_timer >= 30)
-
+    
+    local FONT_USER = djui_menu_get_font()
     djui_hud_set_resolution(RESOLUTION_DJUI)
-    djui_hud_set_font(FONT_ALIASED)
-
+    djui_hud_set_font(FONT_USER)
+    
     local health_loss = last_health - m.health
     if health_loss > 10 then glitch_intensity = 10 end
     last_health = m.health
@@ -145,11 +156,11 @@ local function on_hud_render_main()
 
     local base_y = djui_hud_get_screen_height() - 420
     
-    local function dibujar_dato_glitch(texto, x, y)
+    local function render_text(text, x, y)
         local x_cursor = x
         local s_int = math.floor(glitch_intensity)
-        for i = 1, #texto do
-            local char = texto:sub(i, i)
+        for i = 1, #text do
+            local char = text:sub(i, i)
             local rx, ry = 0, 0
             if s_int > 0 then rx = math.random(-s_int, s_int); ry = math.random(-s_int, s_int) end
             djui_hud_set_color(0, 0, 0, 255)
@@ -161,16 +172,16 @@ local function on_hud_render_main()
     end
 
     if M.xyz or exiting_xyz or anim_x_xyz > -395 then
-        dibujar_dato_glitch("X: " .. format_num(m.pos.x), 40 + anim_x_xyz, base_y + 30)
-        dibujar_dato_glitch("Y: " .. format_num(m.pos.y), 40 + anim_x_xyz, base_y + 60)
-        dibujar_dato_glitch("Z: " .. format_num(m.pos.z), 40 + anim_x_xyz, base_y + 90)
+        render_text("X: " .. format_num(m.pos.x), 40 + anim_x_xyz, base_y + 30)
+        render_text("Y: " .. format_num(m.pos.y), 40 + anim_x_xyz, base_y + 60)
+        render_text("Z: " .. format_num(m.pos.z), 40 + anim_x_xyz, base_y + 90)
     end
 
     if M.spd or exiting_spd or anim_x_spd > -395 then
         local py_base = base_y + current_y_offset
-        dibujar_dato_glitch("Vel X: " .. format_num(m.vel.x), 40 + anim_x_spd, py_base + 30)
-        dibujar_dato_glitch("Vel Y: " .. format_num(m.vel.y), 40 + anim_x_spd, py_base + 60)
-        dibujar_dato_glitch("Vel Z: " .. format_num(m.vel.z), 40 + anim_x_spd, py_base + 90)
+        render_text("Vel X: " .. format_num(m.vel.x), 40 + anim_x_spd, py_base + 30)
+        render_text("Vel Y: " .. format_num(m.vel.y), 40 + anim_x_spd, py_base + 60)
+        render_text("Vel Z: " .. format_num(m.vel.z), 40 + anim_x_spd, py_base + 90)
     end
 
     local sw = djui_hud_get_screen_width()
@@ -193,7 +204,7 @@ local function on_hud_render_main()
     end
 end
 
-hook_chat_command("s", "[on|off]", function(msg)
+hook_chat_command("s", (_T("s_cmd_desc")), function(msg)
     local arg = msg:lower():gsub("%s+", "")
     if arg == "on" then M.spd = true; exiting_spd = false
     elseif arg == "off" then M.spd = false; exiting_spd = true
@@ -212,7 +223,7 @@ hook_chat_command("s", "[on|off]", function(msg)
     return true
 end)
 
-hook_chat_command("c", "[on|off]", function(msg)
+hook_chat_command("c", (_T("c_cmd_desc")), function(msg)
     local arg = msg:lower():gsub("%s+", "")
     if arg == "on" then M.xyz = true; exiting_xyz = false
     elseif arg == "off" then M.xyz = false; exiting_xyz = true
@@ -231,7 +242,7 @@ hook_chat_command("c", "[on|off]", function(msg)
     return true
 end)
 
-hook_chat_command("a", "[on|off]", function(msg)
+hook_chat_command("a", (_T("a_cmd_desc")), function(msg)
     local arg = msg:lower():gsub("%s+", "")
     if arg == "on" then M.anim = true
     elseif arg == "off" then M.anim = false
@@ -251,10 +262,11 @@ hook_chat_command("a", "[on|off]", function(msg)
 end)
 
 
-hook_chat_command("cpmenu", "Abre el menú de \\#ffff1e\\Coords \\#00ff00\\+ \\#00ffff\\DX", function() 
+hook_chat_command("cpmenu", (_T("cpmenu_cmd_desc")), function() 
     if menu_state == "closed" then menu_state = "loading"; play_sound(SOUND_MENU_MESSAGE_NEXT_PAGE, gGlobalSoundSource) 
     else menu_state = "closed"; play_sound(SOUND_MENU_CAMERA_BUZZ, gGlobalSoundSource) end
     return true 
 end)
 
 hook_event(HOOK_ON_HUD_RENDER, on_hud_render_main)
+hook_event(HOOK_ON_MODS_LOADED, refresh_chat_command_descriptions)
