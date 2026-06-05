@@ -24,7 +24,7 @@ _G.LANG = {
         h_blu_name = "Azul Zafiro",       h_blu_desc = "Color azul claro y limpio para la interfaz.",
         h_wht_name = "Blanco Puro",       h_wht_desc = "Color blanco minimalista y nítido para máxima lectura.",
 
-        m_cyn_name = "Cyan Neón",         m_cyn_desc = "Bordes y efectos a un tono cyan cibernético.",
+        m_cyn_name = "\\#00ff00\\Coords+",         m_cyn_desc = "Bordes y efectos a un tono cyan cibernético.",
         m_red_name = "Rojo Fuego",        m_red_desc = "Estética del menú con detalles en rojo vivo.",
         m_grn_name = "Verde Matrix",      m_grn_desc = "Estilo verde digital y limpio a los bordes.",
         m_pur_name = "Morado Premium",    m_pur_desc = "Aspecto exclusivo y elegante en tono violeta.",
@@ -47,15 +47,21 @@ _G.LANG = {
         err_c = "\\#ff3333\\Error: Usa /c on, /c off o solo /c",
         err_a = "\\#ff3333\\Error: Usa /a on, /a off o solo /a",
         err_rgb = "\\#ff3333\\Error: /cc necesita 3 números (Ej: /cc 255 255 30)",
-        on_c = "Coords: \\#00ff00\\ON",
-        off_c = "Coords: \\#ff0000\\OFF",
-        on_s = "Speed: \\#00ff00\\ON",
-        off_s = "Speed: \\#ff0000\\OFF",
-        on_a = "Animaciones: \\#00ff00\\ON",
-        off_a = "Animaciones: \\#ff0000\\OFF",
+        on_c = "Coords: \\#00ff00\\Sí",
+        off_c = "Coords: \\#ff0000\\No",
+        on_s = "Speed: \\#00ff00\\Sí",
+        off_s = "Speed: \\#ff0000\\No",
+        on_a = "Animaciones: \\#00ff00\\Sí",
+        off_a = "Animaciones: \\#ff0000\\No",
         notify_hud = "Color HUD: ",
         notify_menu = "Color Menú: ",
-        notify_lang = "Idioma cambiado a: Español"
+        notify_lang = "Idioma cambiado a: Español",
+        
+        --Descripciones de Comandos
+        a_cmd_desc = "\\#2BC3FF\\[on|off] \\#dcdcdc\\Sirve para activar las animaciones",
+        c_cmd_desc = "\\#2BC3FF\\[on|off] \\#dcdcdc\\Sirve para activar las coordenadas",
+        s_cmd_desc = "\\#2BC3FF\\[on|off] \\#dcdcdc\\Sirve para activar la velocidad",
+        cpmenu_cmd_desc = "Abre el menú de \\#ffff1e\\Coords \\#00ff00\\+ \\#00ffff\\DX"
     },
 
     en = {
@@ -112,7 +118,13 @@ _G.LANG = {
         off_a = "Animations: \\#ff0000\\OFF",
         notify_hud = "HUD Color: ",
         notify_menu = "Menu Color: ",
-        notify_lang = "Language changed to: English"
+        notify_lang = "Language changed to: English",
+        
+        --Commands Descriptions
+        a_cmd_desc = "\\#2BC3FF\\[on|off] \\#dcdcdc\\Used to toggle animations",
+        c_cmd_desc = "\\#2BC3FF\\[on|off] \\#dcdcdc\\Used to toggle coordinates",
+        s_cmd_desc = "\\#2BC3FF\\[on|off] \\#dcdcdc\\Used to toggle speed",
+        cpmenu_cmd_desc = "Opens the \\#ffff1e\\Coords \\#00ff00\\+ \\#00ffff\\DX menu"
     },
     
     fr = {
@@ -175,7 +187,12 @@ _G.LANG = {
         off_a = "Animations : \\#ff0000\\OFF",
         notify_hud = "Couleur HUD : ",
         notify_menu = "Couleur Menu : ",
-        notify_lang = "Langue changée en : Français"
+        notify_lang = "Langue changée en : Français",
+        
+        a_cmd_desc = "\\#2BC3FF\\[on|off] \\#dcdcdc\\Permet d'activer les animations",
+        c_cmd_desc = "\\#2BC3FF\\[on|off] \\#dcdcdc\\Permet d'activer les coordonnées",
+        s_cmd_desc = "\\#2BC3FF\\[on|off] \\#dcdcdc\\Permet d'activer la vitesse",
+        cpmenu_cmd_desc = "Ouvre le menu \\#ffff1e\\Coords \\#00ff00\\+ \\#00ffff\\DX"
     }
 }
 
