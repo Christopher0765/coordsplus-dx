@@ -155,7 +155,11 @@ end
 local function on_hud_render_menu()
     local m = gMarioStates[0]
     if not m or not m.marioObj then return end
+    --------
+--Unused Function
 
+--local FONT_USER = djui_menu_get_font()
+-------
     djui_hud_set_resolution(RESOLUTION_DJUI)
     djui_hud_set_font(FONT_ALIASED)
 
